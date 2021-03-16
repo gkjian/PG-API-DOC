@@ -1,0 +1,93 @@
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at /home/techworlds/public_html/pgs/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+32 vendor frames [22m
+  33  /home/techworlds/public_html/pgs/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at /home/techworlds/public_html/pgs/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+32 vendor frames [22m
+  33  /home/techworlds/public_html/pgs/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at /home/techworlds/public_html/pgs/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+32 vendor frames [22m
+  33  /home/techworlds/public_html/pgs/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Predis\Connection\ConnectionException 
+
+  Connection refused [tcp://127.0.0.1:6379]
+
+  at /home/techworlds/public_html/pgs/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+32 vendor frames [22m
+  33  /home/techworlds/public_html/pgs/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+Horizon started successfully.
+[2021-03-10 13:31:53][7d522571-cac2-478e-903d-10685597a5b9] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 13:31:55][7d522571-cac2-478e-903d-10685597a5b9] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 17:10:39][fac60557-bfdf-4620-a021-e053553712a1] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 17:10:40][fac60557-bfdf-4620-a021-e053553712a1] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 17:10:40][5b0c39f0-3e26-471a-8bb6-23c552c70f68] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 17:10:41][5b0c39f0-3e26-471a-8bb6-23c552c70f68] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 17:11:11][a232e675-fc5f-4d36-af5b-f3637bc4ea51] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 17:11:12][a232e675-fc5f-4d36-af5b-f3637bc4ea51] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 17:12:00][1aabdbb4-efd6-40ef-bc57-fb9a4188518b] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 17:12:01][1aabdbb4-efd6-40ef-bc57-fb9a4188518b] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 22:44:16][2d89d7de-1b7d-44d2-b190-456d8d81e9d8] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-03-10 22:44:16][2d89d7de-1b7d-44d2-b190-456d8d81e9d8] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+Horizon started successfully.
+Horizon started successfully.
+Horizon started successfully.
+Horizon started successfully.
