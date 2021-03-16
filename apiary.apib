@@ -1,0 +1,221 @@
+FORMAT: 1A
+
+# PG API
+
+Before you integrate PG into your application, you should have done the registration 
+and having the encryption keys. The 2 encryption key is for production environment. 
+Please ensure your callback URL is valid and updated in PG portal.
+
+## Make REST API call
+
+In REST API calls, include the URL to the API service for the environment:
+ 
+*Production*: https://pg.techworlds.com.my
+
+Also, encrypt your data parameter with the encryption key we provided to prove your identity and access protected resources.
+
+# Group Encryption & Decryption
+
+To secure the communication, besides whitelisting IP address, PG implements encryption by 
+using generated product key and secret key to encrypt your request parameters. Therefore, 
+the encrypted data will be validated by PG vice versa. If the keys are valid, then it will 
+be considered genuine request or response. You may contact us to regenerate your encryption 
+keys if needed.
+<br/><br/>
+> **NOTE**: *Please keep your secret key and product key confidentiality.*
+
+<br/><br/>
+The PG will generate 32-character length of secretKey and 16-character length of productKey.
+<br/><br/>
+`secretKey: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+<br/><br/>
+`productKey: xxxxxxxxxxxxxxxx`
+
+<br/><br/>
+**_The function to encrypt your data._**
+    
+    Encryption
+    
+    public static function payencyrpt2($data, $secretKey, $productKey)
+    {
+        $plaintext = base64_encode(json_encode($data));
+        $cipher = "AES-256-CBC";
+        $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $$secretKey, NULL, $productKey);
+        $hmac = hash_hmac('sha256', $ciphertext_raw, $secretKey, true);
+        $ciphertext = base64_encode($productKey . $hmac . $ciphertext_raw);
+        return $ciphertext;
+    }
+
+<br/><br/>
+**_The function to decrypt your data._**
+
+    Decryption
+
+    public static function paydecyrpt2($encrypted, $key, $iv)
+    {
+        try
+        {
+            $c = base64_decode($encrypted);
+            $ivlen = openssl_cipher_iv_length($cipher = "AES-256-CBC");
+            $iv2 = substr($c, 0, $ivlen);
+            
+            if ($iv != $iv)
+            {
+                return "Sign error";
+            } else {
+                $hmac = substr($c, $ivlen, $sha2len = 32);
+                $ciphertext_raw = substr($c, $ivlen + $sha2len);
+                $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, NULL, $iv);
+                $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, true);
+                
+                if (hash_equals($hmac, $calcmac))
+                {
+                    return base64_decode($original_plaintext);
+                } else {
+                    return "Sign error"
+                }
+            }
+        } catch (\Exception $e) {
+            return "Sign error";
+        }
+        //Sign error: your secretKey or productKey is invalid
+    }
+
+# Group API Request
+
+To make a REST API request, you combine the HTTP `GET` and `POST` method, the URL to the API service.
+
+The URL to the API service is either:
+
+*Production*: https://pg.techworlds.com.my
+
+Most `GET` and `POST` calls require a JSON request body.
+<br/><br/><br/>
+**HTTP request headers**
+
+The commonly used HTTP request headers are:
+
+**Accept**
+
+    The response format, which is required for operations with a response body. The syntax is:
+
+                Accept: application/json
+
+<br/><br/>
+**Content Type**
+
+    The request format, which is required for operations with a request body. The syntax is:
+
+                Content-Type: application/json
+
+# Group API Responses
+
+PG API calls return HTTP status codes. Some API calls also return JSON response bodies that 
+include information about the resources. Each REST API request returns an HTTP status code.
+<br/><br/><br/>
+**HTTP status code**
+
+For successful requests, PG returns HTTP `2xx` status codes.
+
+For failed requests, PG returns HTTP `4xx` or `5xx` status codes.
+
+PG may returns these HTTP status codes:
+
+Status code | Description
+---|---
+`200 OK`  |   The request succeeded.
+`201 Created`  |   A `POST` method successfully created a resource. If the resource was already created by a previous execution of the same method
+`400 Bad Request`  |   `INVALID_REQUEST`. Request is not well-formed, syntactically incorrect, or violates schema.
+`401 Unouthorized`  |   `AUTHENTICATION_FAILURE`. Authentication failed due to invalid authentication credentials.
+`403 Forbidden`  |   `NOT_AUTHORIZED`. Authorization failed due to insufficient permissions.
+`404 Not Found`  |   `RESOURCE_NOT_FOUND`. The specified resource does not exist.
+`405 Method Not Allowed`  |   `METHOD_NOT_SUPPORTED`. The server does not implement the   requested HTTP method.
+`500 Internal Server Error`  |   `INTERNAL_SERVER_ERROR`. An internal server error has occurred.
+`503 Service Unavailable`  |   `SERVICE_UNAVAILABLE`. Service Unavailable.
+
+# Group Top-up 
+
+#### Parameters [POST /api/top-up]
+
+    Encrypt the parameters
+    
+    $secret_key = "1234abcd1234abcd1234abcd1234abcd";
+    $product_key = "1234abcd1234abcd";
+    $data = [
+        "client_transaction" => "1",
+        "gate_id" => "9",
+        "amount" => "10000",
+        "currency" => "VND",
+    ];
+    $encrypted = $this->encryption($data, $secret_key, $product_key);
+<br/><br/>
+Parameters that need to be pass for the request.
+
+Parameters | Type | Required | Description
+---|---|---|---
+product_key  |   string | yes | Product Key that generated by PG.
+secret_key  |   string | yes | Secret Key that generated by PG.
+encrypted | string | yes | The encrypted data.
+
++ Parameters
+    - transactionId : (string, required) - Generated transaction ID
+    - clientTransactionId : (string, required) - Unique client transaction ID
+    - name : (string, required) - Customer name
+    - beneficiaryAccount : (string, required) - Beneficiary bank account
+    - beneficiaryBank : (string, required) - Beneficiary bank name
+    - currency : (string, required) - Currency (default VND)
+    - projectId : (string, required) - ID for specific project
+    - amount : (decimal, required) - Amount
+    - callback_url : (string, optional) - Callback URL will be called by GET method when the transaction is updated, whether completed or rejected
+
++ Response 200 (application/json)
+
+        {
+            "status": 0,
+            "ret_msg": "Success",
+            "data": {
+                "call_back_url": "http:\/\/pgpay.techworlds.com.my\/#topup\/?signature=..."
+        }
+        
+# Group Payout 
+
+#### Parameters [POST /api/payout]
+
+    Encrypt the parameters.
+
+    $secret_key = "abcd1234abcd1234abcd1234abcd1234";
+    $product_key = "abcd1234abcd1234";
+    $data = [
+        "gate_id" => "1",
+        "bank_name" => "test",
+        "bank_account_name" => "test",
+        "bank_account_number" => "999",
+        "amount" => "10000",
+        "currency" => "VND",
+    ];
+    $encrypted = $this->encryption($data, $secret_key, $product_key);
+<br/><br/>
+Parameters that need to be pass for the request.
+
+Parameters | Type | Required | Description
+---|---|---|---
+product_key  |   string | yes | Product Key that generated by PG.
+secret_key  |   string | yes | Secret Key that generated by PG.
+encrypted | string | yes | The encrypted data.
+
++ Parameters
+    - gate_id : (string, required) - Gate ID
+    - bank_name : (string, required) - Bank name
+    - bank_account_name : (string, required) - Bank account name.
+    - bank_account_number : (string, required) - Bank account number
+    - currency : (string, required) - Currency (default VND)
+    - amount : (decimal, required) - Amount
+
++ Response 200 (application/json)
+
+        {
+            "status": 0,
+            "ret_msg": "Success",
+            "data":[
+            ]
+        }
