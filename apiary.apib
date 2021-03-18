@@ -208,22 +208,46 @@ secret_key | string | yes | Secret key generate by PG
 + Response 200 (application/json)
 
         {
-            "status": 0,
-            "ret_msg": "Success",
-            "data":[
+            "status": 0
+            "ret_msg": "success",
+            "data": [
+              payout_list: [
                 {
-                    "id":3,
-                    "amount":"123.00",
-                    "bank_name":"123",
-                    "bank_account_name":"123",
-                    "bank_account_number":"123",
-                    "remark":"123",
-                    "document_no":"p210317121237003",
-                    "created_at":"2021-03-17 12:12:37",
-                    "admin_remark":null,
-                    "processing_fee":"2.23",
-                    "processing_rate":"1.00",
-                    "processing_fix":"1.00",
+                  "document_no":"p210318095401001",
+                  "client_transaction": "1",
+                  "bank_name":"test bank name",
+                  "bank_account_name":"test bank acc name",
+                  "bank_account_number":"963852741",
+                  "remark":"test remark",
+                  "amount":"100.00",
+                  "currency": "VND",
+                  "processing_fee":"2.00",
+                  "processing_rate":"1.00",
+                  "processing_fix":"1.00",
+                  "created_at":"2021-03-18 09:54:01",
+                  "status":"pending",
+                  "admin_remark":"test remark",
+                  "statement_date":"2021-03-18",
                 }
+              ],
+              top_up_list: [
+                {  
+                  "document_no":"qkdH2Mn1mjtTuNxh",
+                  "user_name":"test ur name",
+                  "client_transaction":"111",
+                  "currency": "VND",
+                  "amount":"10.00",
+                  "processing_fee":"1.10",
+                  "processing_rate":"1.00",
+                  "processing_fix":"1.00",
+                  "amount_adjustment":"0.00",
+                  "remark":"test remark",
+                  "status":"approve",
+                  "admin_remark":"testing",
+                  "approve_by":"Admin",
+                  "created_at":"2021-03-18 09:34:44",
+                  "statement_date":"2021-03-18",
+                }
+              ]
             ]
         }
